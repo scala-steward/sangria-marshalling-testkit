@@ -1,7 +1,7 @@
 package sangria.marshalling.testkit
 
 import org.scalatest.{WordSpec, Matchers}
-import sangria.marshalling.{InputUnmarshaller, FromInput, ToInput, ResultMarshaller}
+import sangria.marshalling._
 
 trait InputHandlingBehaviour {
   this: WordSpec with Matchers ⇒
@@ -100,6 +100,10 @@ trait InputHandlingBehaviour {
         Some("foo bar and baz"),
         Some(List("culture", "nature")),
         List(Comment("bob", Some("first!")))))
+    }
+
+    "throw exception on invalid input (case class unmarshalling)" in {
+      an [InputParsingError] should be thrownBy fi.fromResult(fi.marshaller.mapNode(Seq.empty))
     }
   }
 
