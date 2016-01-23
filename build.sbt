@@ -14,6 +14,7 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "2.2.4"
 )
 
+resolvers += "Sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
 git.remoteRepo := "git@github.com:sangria-graphql/sangria-marshalling-testkit.git"
 
 // Publishing
