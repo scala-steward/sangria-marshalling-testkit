@@ -7,7 +7,9 @@ and produces correct results.
 
 SBT Configuration:
 
-    libraryDependencies += "org.sangria-graphql" %% "sangria-marshalling-testkit" % "0.1.0" % "test"
+```scala
+libraryDependencies += "org.sangria-graphql" %% "sangria-marshalling-testkit" % "0.1.0" % "test"
+```
 
 ## License
 
