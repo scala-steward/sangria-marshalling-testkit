@@ -6,9 +6,6 @@ import sangria.marshalling._
 trait InputHandlingBehaviour {
   this: WordSpec with Matchers ⇒
 
-  case class Comment(author: String, text: Option[String])
-  case class Article(title: String, text: Option[String], tags: Option[List[String]], comments: List[Comment])
-
   def `AST-based input marshaller`[Raw](rm: ResultMarshaller)(implicit ti: ToInput[rm.Node, Raw]): Unit = {
     "handle undefined values (ast-based marshalling)" in {
       val marshaled = marshalUndefined(rm)
@@ -179,3 +176,6 @@ trait InputHandlingBehaviour {
     ))))
   }
 }
+
+case class Comment(author: String, text: Option[String])
+case class Article(title: String, text: Option[String], tags: Option[List[String]], comments: List[Comment])
