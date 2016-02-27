@@ -1,4 +1,4 @@
-## v0.2.0 (2016-02-27)
+## v0.1.1 (2016-02-27)
 
 * Improved undefined value handling in case class marshalling test 
 
