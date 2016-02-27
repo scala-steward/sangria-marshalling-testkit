@@ -11,7 +11,7 @@ scalacOptions ++= Seq("-deprecation", "-feature")
 
 libraryDependencies ++= Seq(
   "org.sangria-graphql" %% "sangria-marshalling-api" % "0.1.0",
-  "org.scalatest" %% "scalatest" % "2.2.4"
+  "org.scalatest" %% "scalatest" % "2.2.6"
 )
 
 git.remoteRepo := "git@github.com:sangria-graphql/sangria-marshalling-testkit.git"

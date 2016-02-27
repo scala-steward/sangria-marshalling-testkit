@@ -113,19 +113,39 @@ trait InputHandlingBehaviour {
   private def verifyUndefined[T](res: T, m: ResultMarshaller)(implicit iu: InputUnmarshaller[T]): Unit = {
     iu.isMapNode(res) should be (true)
 
-    iu.getMapKeys(res) should (have(size(2)) and contain("title") and contain("comments"))
+    iu.getMapKeys(res) should (contain("title") and contain("comments"))
     iu.getMapValue(res, "title") should be (Some(m.stringNode("Foo")))
     iu.getMapValue(res, "comments") should be (Some(m.arrayNode(Vector.empty)))
+
+    assertPossibleNullNodes(res, m, "text" :: "tags" :: Nil)
   }
+
   private def verifyDeepUndefined[T](res: T, m: ResultMarshaller)(implicit iu: InputUnmarshaller[T]): Unit = {
     iu.isMapNode(res) should be (true)
 
-    iu.getMapKeys(res) should (have(size(2)) and contain("title") and contain("comments"))
+    iu.getMapKeys(res) should (contain("title") and contain("comments"))
     iu.getMapValue(res, "title") should be (Some(m.stringNode("Foo")))
-    iu.getMapValue(res, "comments") should be (Some(m.arrayNode(Vector(
-      m.mapNode(Vector("author" → m.stringNode("bob")))
-    ))))
+
+    assertPossibleNullNodes(res, m, "text" :: "tags" :: Nil)
+
+    val Some(comments) = iu.getMapValue(res, "comments")
+
+    iu.isListNode(comments) should be (true)
+
+    val commentSeq = iu.getListValue(comments)
+
+    commentSeq should have size 1
+
+    iu.getMapValue(commentSeq(0), "author") should be (Some(m.stringNode("bob")))
+
+    assertPossibleNullNodes(commentSeq(0), m, "text" :: Nil)
   }
+
+  def assertPossibleNullNodes[T](res: T, m: ResultMarshaller, names: Seq[String])(implicit iu: InputUnmarshaller[T]) =
+    names.foreach { name ⇒
+      if (iu.getMapKeys(res).exists(_ == name))
+        iu.getMapValue(res, name) should be (Some(m.nullNode))
+    }
 
   private def marshalNull(rm: ResultMarshaller): rm.Node =
     rm.mapNode(Seq(
