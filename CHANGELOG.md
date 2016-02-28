@@ -1,3 +1,7 @@
+## v0.1.2 (2016-02-28)
+
+* Input parsing tests 
+
 ## v0.1.1 (2016-02-27)
 
 * Improved undefined value handling in case class marshalling test 
