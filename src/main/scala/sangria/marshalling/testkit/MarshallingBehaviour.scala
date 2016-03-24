@@ -170,8 +170,8 @@ trait MarshallingBehaviour {
       val seq = rm.arrayNode(Vector(map, rm.nullNode, rm.stringNode("ABC"), rm.arrayNode(Vector.empty)))
 
       val marshaled1 = rm.mapNode(Vector("first" → seq, "second" → rm.nullNode))
-      val marshaled2 = rm.addMapNodeElem(rm.addMapNodeElem(rm.emptyMapNode, "first", seq, false), "second", rm.nullNode, false)
-      val marshaled3 = rm.addMapNodeElem(rm.addMapNodeElem(rm.emptyMapNode, "first", seq, true), "second", rm.nullNode, true)
+      val marshaled2 = rm.mapNode(rm.addMapNodeElem(rm.addMapNodeElem(rm.emptyMapNode(Seq("first", "second")), "first", seq, false), "second", rm.nullNode, false))
+      val marshaled3 = rm.mapNode(rm.addMapNodeElem(rm.addMapNodeElem(rm.emptyMapNode(Seq("first", "second")), "first", seq, true), "second", rm.nullNode, true))
 
       List(marshaled1, marshaled2, marshaled3) foreach { marshaled ⇒
         marshaled.convertMarshaled[Any @@ ScalaInput] should be (
