@@ -106,7 +106,7 @@ trait InputHandlingBehaviour {
 
   private def marshalUndefined(rm: ResultMarshaller): rm.Node =
     rm.mapNode(Seq(
-      "title" → rm.stringNode("Foo"),
+      "title" → rm.scalarNode("Foo", "Test", Set.empty),
       "comments" → rm.arrayNode(Vector.empty)
     ))
 
@@ -114,7 +114,7 @@ trait InputHandlingBehaviour {
     iu.isMapNode(res) should be (true)
 
     iu.getMapKeys(res) should (contain("title") and contain("comments"))
-    iu.getMapValue(res, "title") should be (Some(m.stringNode("Foo")))
+    iu.getMapValue(res, "title") should be (Some(m.scalarNode("Foo", "Test", Set.empty)))
     iu.getMapValue(res, "comments") should be (Some(m.arrayNode(Vector.empty)))
 
     assertPossibleNullNodes(res, m, "text" :: "tags" :: Nil)
@@ -124,7 +124,7 @@ trait InputHandlingBehaviour {
     iu.isMapNode(res) should be (true)
 
     iu.getMapKeys(res) should (contain("title") and contain("comments"))
-    iu.getMapValue(res, "title") should be (Some(m.stringNode("Foo")))
+    iu.getMapValue(res, "title") should be (Some(m.scalarNode("Foo", "Test", Set.empty)))
 
     assertPossibleNullNodes(res, m, "text" :: "tags" :: Nil)
 
@@ -136,7 +136,7 @@ trait InputHandlingBehaviour {
 
     commentSeq should have size 1
 
-    iu.getMapValue(commentSeq(0), "author") should be (Some(m.stringNode("bob")))
+    iu.getMapValue(commentSeq(0), "author") should be (Some(m.scalarNode("bob", "Test", Set.empty)))
 
     assertPossibleNullNodes(commentSeq(0), m, "text" :: Nil)
   }
@@ -149,14 +149,14 @@ trait InputHandlingBehaviour {
 
   private def marshalNull(rm: ResultMarshaller): rm.Node =
     rm.mapNode(Seq(
-      "title" → rm.stringNode("Foo"),
+      "title" → rm.scalarNode("Foo", "Test", Set.empty),
       "text" → rm.nullNode,
       "tags" → rm.nullNode,
       "comments" → rm.arrayNode(Vector(
         rm.mapNode(List(
-          "author" → rm.stringNode("bob"))),
+          "author" → rm.scalarNode("bob", "Test", Set.empty))),
         rm.mapNode(List(
-          "author" → rm.stringNode("bob1"),
+          "author" → rm.scalarNode("bob1", "Test", Set.empty),
           "text" → rm.nullNode))
       ))
     ))
@@ -164,35 +164,35 @@ trait InputHandlingBehaviour {
   private def verifyNull[T](res: T, m: ResultMarshaller)(implicit iu: InputUnmarshaller[T]): Unit = {
     iu.isMapNode(res) should be (true)
 
-    iu.getMapValue(res, "title") should be (Some(m.stringNode("Foo")))
+    iu.getMapValue(res, "title") should be (Some(m.scalarNode("Foo", "Test", Set.empty)))
     iu.getMapValue(res, "text") should be (Some(m.nullNode))
     iu.getMapValue(res, "tags") should be (Some(m.nullNode))
     iu.getMapValue(res, "comments") should be (Some(m.arrayNode(Vector(
-      m.mapNode(Vector("author" → m.stringNode("bob"))),
-      m.mapNode(Vector("author" → m.stringNode("bob1"), "text" → m.nullNode))
+      m.mapNode(Vector("author" → m.scalarNode("bob", "Test", Set.empty))),
+      m.mapNode(Vector("author" → m.scalarNode("bob1", "Test", Set.empty), "text" → m.nullNode))
     ))))
   }
 
   private def marshalDefined(rm: ResultMarshaller): rm.Node =
     rm.mapNode(Seq(
-      "title" → rm.stringNode("Foo"),
-      "text" → rm.stringNode("foo bar and baz"),
-      "tags" → rm.arrayNode(Vector(rm.stringNode("culture"), rm.stringNode("nature"))),
+      "title" → rm.scalarNode("Foo", "Test", Set.empty),
+      "text" → rm.scalarNode("foo bar and baz", "Test", Set.empty),
+      "tags" → rm.arrayNode(Vector(rm.scalarNode("culture", "Test", Set.empty), rm.scalarNode("nature", "Test", Set.empty))),
       "comments" → rm.arrayNode(Vector(
         rm.mapNode(List(
-          "author" → rm.stringNode("bob"),
-          "text" → rm.stringNode("first!")))
+          "author" → rm.scalarNode("bob", "Test", Set.empty),
+          "text" → rm.scalarNode("first!", "Test", Set.empty)))
       ))
     ))
 
   private def verifyDefined[T](res: T, m: ResultMarshaller)(implicit iu: InputUnmarshaller[T]): Unit = {
     iu.isMapNode(res) should be (true)
 
-    iu.getMapValue(res, "title") should be (Some(m.stringNode("Foo")))
-    iu.getMapValue(res, "text") should be (Some(m.stringNode("foo bar and baz")))
-    iu.getMapValue(res, "tags") should be (Some(m.arrayNode(Vector(m.stringNode("culture"), m.stringNode("nature")))))
+    iu.getMapValue(res, "title") should be (Some(m.scalarNode("Foo", "Test", Set.empty)))
+    iu.getMapValue(res, "text") should be (Some(m.scalarNode("foo bar and baz", "Test", Set.empty)))
+    iu.getMapValue(res, "tags") should be (Some(m.arrayNode(Vector(m.scalarNode("culture", "Test", Set.empty), m.scalarNode("nature", "Test", Set.empty)))))
     iu.getMapValue(res, "comments") should be (Some(m.arrayNode(Vector(
-      m.mapNode(Vector("author" → m.stringNode("bob"), "text" → m.stringNode("first!")))
+      m.mapNode(Vector("author" → m.scalarNode("bob", "Test", Set.empty), "text" → m.scalarNode("first!", "Test", Set.empty)))
     ))))
   }
 }

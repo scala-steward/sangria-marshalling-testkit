@@ -11,7 +11,7 @@ trait MarshallingBehaviour {
 
   def `value (un)marshaller`[T](rm: ResultMarshaller)(implicit iu: InputUnmarshaller[rm.Node]): Unit = {
     "(un)marshal boolean scalar values" in {
-      val marshaled = rm.booleanNode(true)
+      val marshaled = rm.scalarNode(true, "Test", Set.empty)
 
       val scalar = iu.getScalarValue(marshaled)
       val scalaScalar = iu.getScalaScalarValue(marshaled)
@@ -31,7 +31,7 @@ trait MarshallingBehaviour {
     }
 
     "(un)marshal int scalar values" in {
-      val marshaled = rm.intNode(123)
+      val marshaled = rm.scalarNode(123, "Test", Set.empty)
 
       val scalar = iu.getScalarValue(marshaled)
       val scalaScalar = iu.getScalaScalarValue(marshaled)
@@ -51,7 +51,7 @@ trait MarshallingBehaviour {
     }
 
     "(un)marshal big int scalar values" in {
-      val marshaled = rm.bigIntNode(BigInt("12323432432432"))
+      val marshaled = rm.scalarNode(BigInt("12323432432432"), "Test", Set.empty)
 
       val scalar = iu.getScalarValue(marshaled)
       val scalaScalar = iu.getScalaScalarValue(marshaled)
@@ -71,7 +71,27 @@ trait MarshallingBehaviour {
     }
 
     "(un)marshal float scalar values" in {
-      val marshaled = rm.floatNode(123.456D)
+      val marshaled = rm.scalarNode(123.456F, "Test", Set.empty)
+
+      val scalar = iu.getScalarValue(marshaled)
+      val scalaScalar = iu.getScalaScalarValue(marshaled)
+
+      iu.getScalaScalarValue(marshaled) should equal (123.456F: Any)
+
+      if (scalar != scalaScalar)
+        scalar should be (marshaled)
+
+      iu.isScalarNode(marshaled) should be (true)
+      iu.isDefined(marshaled) should be (true)
+
+      iu.isEnumNode(marshaled) should be (false)
+      iu.isVariableNode(marshaled) should be (false)
+      iu.isMapNode(marshaled) should be (false)
+      iu.isListNode(marshaled) should be (false)
+    }
+
+    "(un)marshal double scalar values" in {
+      val marshaled = rm.scalarNode(123.456D, "Test", Set.empty)
 
       val scalar = iu.getScalarValue(marshaled)
       val scalaScalar = iu.getScalaScalarValue(marshaled)
@@ -91,7 +111,7 @@ trait MarshallingBehaviour {
     }
 
     "(un)marshal big decimal scalar values" in {
-      val marshaled = rm.bigDecimalNode(BigDecimal("12323432432432.2435454354543"))
+      val marshaled = rm.scalarNode(BigDecimal("12323432432432.2435454354543"), "Test", Set.empty)
 
       val scalar = iu.getScalarValue(marshaled)
       val scalaScalar = iu.getScalaScalarValue(marshaled)
@@ -111,7 +131,7 @@ trait MarshallingBehaviour {
     }
 
     "(un)marshal string scalar values" in {
-      val marshaled = rm.stringNode("Hello world")
+      val marshaled = rm.scalarNode("Hello world", "Test", Set.empty)
 
       val scalar = iu.getScalarValue(marshaled)
       val scalaScalar = iu.getScalaScalarValue(marshaled)
@@ -125,6 +145,23 @@ trait MarshallingBehaviour {
       iu.isDefined(marshaled) should be (true)
 
       iu.isEnumNode(marshaled) should be (scalar == scalaScalar)
+      iu.isVariableNode(marshaled) should be (false)
+      iu.isMapNode(marshaled) should be (false)
+      iu.isListNode(marshaled) should be (false)
+    }
+
+    "(un)marshal enum values" in {
+      val marshaled = rm.enumNode("FOO", "Test")
+
+      val scalar = iu.getScalarValue(marshaled)
+      val scalaScalar = iu.getScalaScalarValue(marshaled)
+
+      scalaScalar should be ("FOO": Any)
+
+      iu.isScalarNode(marshaled) should be (scalar == scalaScalar)
+      iu.isDefined(marshaled) should be (true)
+
+      iu.isEnumNode(marshaled) should be (true)
       iu.isVariableNode(marshaled) should be (false)
       iu.isMapNode(marshaled) should be (false)
       iu.isListNode(marshaled) should be (false)
@@ -145,8 +182,8 @@ trait MarshallingBehaviour {
     "(un)marshal list values" in {
       import sangria.marshalling.scalaMarshalling._
 
-      val map = rm.mapNode(Vector("a" → rm.intNode(1)))
-      val seq = Vector(map, rm.nullNode, rm.stringNode("ABC"), rm.arrayNode(Vector.empty))
+      val map = rm.mapNode(Vector("a" → rm.scalarNode(1, "Test", Set.empty)))
+      val seq = Vector(map, rm.nullNode, rm.scalarNode("ABC", "Test", Set.empty), rm.arrayNode(Vector.empty))
       val marshaled = rm.arrayNode(seq)
 
       marshaled.convertMarshaled[Any @@ ScalaInput] should be (
@@ -166,8 +203,8 @@ trait MarshallingBehaviour {
     "(un)marshal map values" in {
       import sangria.marshalling.scalaMarshalling._
 
-      val map = rm.mapNode(Vector("a" → rm.intNode(1)))
-      val seq = rm.arrayNode(Vector(map, rm.nullNode, rm.stringNode("ABC"), rm.arrayNode(Vector.empty)))
+      def map = rm.mapNode(Vector("a" → rm.scalarNode(1, "Test", Set.empty)))
+      def seq = rm.arrayNode(Vector(map, rm.nullNode, rm.scalarNode("ABC", "Test", Set.empty), rm.arrayNode(Vector.empty)))
 
       val marshaled1 = rm.mapNode(Vector("first" → seq, "second" → rm.nullNode))
       val marshaled2 = rm.mapNode(rm.addMapNodeElem(rm.addMapNodeElem(rm.emptyMapNode(Seq("first", "second")), "first", seq, false), "second", rm.nullNode, false))
@@ -198,7 +235,7 @@ trait MarshallingBehaviour {
     }
 
     "marshal optional list values" in {
-      rm.optionalArrayNodeValue(Some(rm.intNode(123))) should be (rm.intNode(123))
+      rm.optionalArrayNodeValue(Some(rm.scalarNode(123, "Test", Set.empty))) should be (rm.scalarNode(123, "Test", Set.empty))
       rm.optionalArrayNodeValue(Some(rm.nullNode)) should be (rm.nullNode)
       rm.optionalArrayNodeValue(None) should be (rm.nullNode)
     }
