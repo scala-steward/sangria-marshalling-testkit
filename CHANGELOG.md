@@ -1,3 +1,7 @@
+## v0.2.2 (2016-10-23)
+
+* Updated to ScalaTest v3.0.0
+
 ## v0.2.1 (2016-05-01)
 
 * Updated to sangria-marshalling-api v0.2.1

@@ -1,6 +1,6 @@
 name := "sangria-marshalling-testkit"
 organization := "org.sangria-graphql"
-version := "0.2.2-SNAPSHOT"
+version := "0.2.2"
 
 description := "Sangria Marshalling API TestKit"
 homepage := Some(url("http://sangria-graphql.org"))
@@ -11,7 +11,7 @@ scalacOptions ++= Seq("-deprecation", "-feature")
 
 libraryDependencies ++= Seq(
   "org.sangria-graphql" %% "sangria-marshalling-api" % "0.2.1",
-  "org.scalatest" %% "scalatest" % "2.2.6"
+  "org.scalatest" %% "scalatest" % "3.0.0"
 )
 
 git.remoteRepo := "git@github.com:sangria-graphql/sangria-marshalling-testkit.git"
