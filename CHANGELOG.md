@@ -1,3 +1,8 @@
+## v0.2.3 (2016-11-03)
+
+* Cross-compile for scala 2.11 and 2.12
+* Updated dependencies
+
 ## v0.2.2 (2016-10-23)
 
 * Updated to ScalaTest v3.0.0

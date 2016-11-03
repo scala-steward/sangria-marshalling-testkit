@@ -1,16 +1,25 @@
 name := "sangria-marshalling-testkit"
 organization := "org.sangria-graphql"
-version := "0.2.3-SNAPSHOT"
+version := "0.2.3"
 
 description := "Sangria Marshalling API TestKit"
 homepage := Some(url("http://sangria-graphql.org"))
 licenses := Seq("Apache License, ASL Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.0"
+crossScalaVersions := Seq("2.11.8", "2.12.0")
+
 scalacOptions ++= Seq("-deprecation", "-feature")
 
+scalacOptions ++= {
+  if (scalaVersion.value startsWith "2.12")
+    Seq.empty
+  else
+    Seq("-target:jvm-1.7")
+}
+
 libraryDependencies ++= Seq(
-  "org.sangria-graphql" %% "sangria-marshalling-api" % "0.2.1",
+  "org.sangria-graphql" %% "sangria-marshalling-api" % "0.2.2",
   "org.scalatest" %% "scalatest" % "3.0.0"
 )
 
