@@ -1,3 +1,8 @@
+## v1.0.0 (2017-01-16)
+
+* Updated to sangria-marshalling-api v1.0.0
+* Updated to ScalaTest v3.0.1
+
 ## v0.2.3 (2016-11-03)
 
 * Cross-compile for scala 2.11 and 2.12
