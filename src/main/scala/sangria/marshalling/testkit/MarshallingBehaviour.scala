@@ -50,6 +50,26 @@ trait MarshallingBehaviour {
       iu.isListNode(marshaled) should be (false)
     }
 
+    "(un)marshal long scalar values" in {
+      val marshaled = rm.scalarNode(Long.MaxValue, "Test", Set.empty)
+
+      val scalar = iu.getScalarValue(marshaled)
+      val scalaScalar = iu.getScalaScalarValue(marshaled)
+
+      iu.getScalaScalarValue(marshaled) should be (Long.MaxValue: Any)
+
+      if (scalar != scalaScalar)
+        scalar should be (marshaled)
+
+      iu.isScalarNode(marshaled) should be (true)
+      iu.isDefined(marshaled) should be (true)
+
+      iu.isEnumNode(marshaled) should be (false)
+      iu.isVariableNode(marshaled) should be (false)
+      iu.isMapNode(marshaled) should be (false)
+      iu.isListNode(marshaled) should be (false)
+    }
+
     "(un)marshal big int scalar values" in {
       val marshaled = rm.scalarNode(BigInt("12323432432432"), "Test", Set.empty)
 
