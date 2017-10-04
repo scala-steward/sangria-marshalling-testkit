@@ -1,3 +1,8 @@
+## v1.0.1 (2017-10-04)
+
+* Add testcase »(un)marshal long scalar values« (#1). Thanks to @agebhar1 for this contribution!
+* Updated dependencies
+
 ## v1.0.0 (2017-01-16)
 
 * Updated to sangria-marshalling-api v1.0.0
