@@ -7,7 +7,7 @@ import sangria.marshalling.MarshallingUtil._
 import sangria.util.tag._
 
 trait MarshallingBehaviour {
-  this: WordSpec with Matchers ⇒
+  this: WordSpec with Matchers =>
 
   def `value (un)marshaller`[T](rm: ResultMarshaller)(implicit iu: InputUnmarshaller[rm.Node]): Unit = {
     "(un)marshal boolean scalar values" in {
@@ -202,12 +202,12 @@ trait MarshallingBehaviour {
     "(un)marshal list values" in {
       import sangria.marshalling.scalaMarshalling._
 
-      val map = rm.mapNode(Vector("a" → rm.scalarNode(1, "Test", Set.empty)))
+      val map = rm.mapNode(Vector("a" -> rm.scalarNode(1, "Test", Set.empty)))
       val seq = Vector(map, rm.nullNode, rm.scalarNode("ABC", "Test", Set.empty), rm.arrayNode(Vector.empty))
       val marshaled = rm.arrayNode(seq)
 
       marshaled.convertMarshaled[Any @@ ScalaInput] should be (
-        Vector(Map("a" → 1), null, "ABC", Vector.empty))
+        Vector(Map("a" -> 1), null, "ABC", Vector.empty))
 
       iu.getListValue(marshaled) should be (seq)
 
@@ -223,18 +223,18 @@ trait MarshallingBehaviour {
     "(un)marshal map values" in {
       import sangria.marshalling.scalaMarshalling._
 
-      def map = rm.mapNode(Vector("a" → rm.scalarNode(1, "Test", Set.empty)))
+      def map = rm.mapNode(Vector("a" -> rm.scalarNode(1, "Test", Set.empty)))
       def seq = rm.arrayNode(Vector(map, rm.nullNode, rm.scalarNode("ABC", "Test", Set.empty), rm.arrayNode(Vector.empty)))
 
-      val marshaled1 = rm.mapNode(Vector("first" → seq, "second" → rm.nullNode))
+      val marshaled1 = rm.mapNode(Vector("first" -> seq, "second" -> rm.nullNode))
       val marshaled2 = rm.mapNode(rm.addMapNodeElem(rm.addMapNodeElem(rm.emptyMapNode(Seq("first", "second")), "first", seq, false), "second", rm.nullNode, false))
       val marshaled3 = rm.mapNode(rm.addMapNodeElem(rm.addMapNodeElem(rm.emptyMapNode(Seq("first", "second")), "first", seq, true), "second", rm.nullNode, true))
 
-      List(marshaled1, marshaled2, marshaled3) foreach { marshaled ⇒
+      List(marshaled1, marshaled2, marshaled3) foreach { marshaled =>
         marshaled.convertMarshaled[Any @@ ScalaInput] should be (
           Map(
-            "first" → Vector(Map("a" → 1), null, "ABC", Vector.empty),
-            "second" → null))
+            "first" -> Vector(Map("a" -> 1), null, "ABC", Vector.empty),
+            "second" -> null))
 
         iu.isMapNode(marshaled) should be (true)
         iu.isDefined(marshaled) should be (true)

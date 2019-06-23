@@ -6,7 +6,7 @@ import sangria.marshalling.{InputParser, InputUnmarshaller}
 import scala.util.Success
 
 trait ParsingBehaviour {
-  this: WordSpec with Matchers ⇒
+  this: WordSpec with Matchers =>
 
   def `input parser`[T : InputUnmarshaller : InputParser](testSubjects: ParseTestSubjects): Unit = {
     val iu = implicitly[InputUnmarshaller[T]]
@@ -100,7 +100,7 @@ trait ParsingBehaviour {
     }
 
     "result in failure in case of syntax errors" in {
-      testSubjects.syntaxError.foreach { broken ⇒
+      testSubjects.syntaxError.foreach { broken =>
         val result = parser.parse(broken)
 
         result.isFailure should be (true)

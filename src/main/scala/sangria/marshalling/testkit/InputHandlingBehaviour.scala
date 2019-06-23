@@ -4,7 +4,7 @@ import org.scalatest.{WordSpec, Matchers}
 import sangria.marshalling._
 
 trait InputHandlingBehaviour {
-  this: WordSpec with Matchers ⇒
+  this: WordSpec with Matchers =>
 
   def `AST-based input marshaller`[Raw](rm: ResultMarshaller)(implicit ti: ToInput[rm.Node, Raw]): Unit = {
     "handle undefined values (ast-based marshalling)" in {
@@ -106,8 +106,8 @@ trait InputHandlingBehaviour {
 
   private def marshalUndefined(rm: ResultMarshaller): rm.Node =
     rm.mapNode(Seq(
-      "title" → rm.scalarNode("Foo", "Test", Set.empty),
-      "comments" → rm.arrayNode(Vector.empty)
+      "title" -> rm.scalarNode("Foo", "Test", Set.empty),
+      "comments" -> rm.arrayNode(Vector.empty)
     ))
 
   private def verifyUndefined[T](res: T, m: ResultMarshaller)(implicit iu: InputUnmarshaller[T]): Unit = {
@@ -142,22 +142,22 @@ trait InputHandlingBehaviour {
   }
 
   def assertPossibleNullNodes[T](res: T, m: ResultMarshaller, names: Seq[String])(implicit iu: InputUnmarshaller[T]) =
-    names.foreach { name ⇒
+    names.foreach { name =>
       if (iu.getMapKeys(res).exists(_ == name))
         iu.getMapValue(res, name) should be (Some(m.nullNode))
     }
 
   private def marshalNull(rm: ResultMarshaller): rm.Node =
     rm.mapNode(Seq(
-      "title" → rm.scalarNode("Foo", "Test", Set.empty),
-      "text" → rm.nullNode,
-      "tags" → rm.nullNode,
-      "comments" → rm.arrayNode(Vector(
+      "title" -> rm.scalarNode("Foo", "Test", Set.empty),
+      "text" -> rm.nullNode,
+      "tags" -> rm.nullNode,
+      "comments" -> rm.arrayNode(Vector(
         rm.mapNode(List(
-          "author" → rm.scalarNode("bob", "Test", Set.empty))),
+          "author" -> rm.scalarNode("bob", "Test", Set.empty))),
         rm.mapNode(List(
-          "author" → rm.scalarNode("bob1", "Test", Set.empty),
-          "text" → rm.nullNode))
+          "author" -> rm.scalarNode("bob1", "Test", Set.empty),
+          "text" -> rm.nullNode))
       ))
     ))
 
@@ -168,20 +168,20 @@ trait InputHandlingBehaviour {
     iu.getMapValue(res, "text") should be (Some(m.nullNode))
     iu.getMapValue(res, "tags") should be (Some(m.nullNode))
     iu.getMapValue(res, "comments") should be (Some(m.arrayNode(Vector(
-      m.mapNode(Vector("author" → m.scalarNode("bob", "Test", Set.empty))),
-      m.mapNode(Vector("author" → m.scalarNode("bob1", "Test", Set.empty), "text" → m.nullNode))
+      m.mapNode(Vector("author" -> m.scalarNode("bob", "Test", Set.empty))),
+      m.mapNode(Vector("author" -> m.scalarNode("bob1", "Test", Set.empty), "text" -> m.nullNode))
     ))))
   }
 
   private def marshalDefined(rm: ResultMarshaller): rm.Node =
     rm.mapNode(Seq(
-      "title" → rm.scalarNode("Foo", "Test", Set.empty),
-      "text" → rm.scalarNode("foo bar and baz", "Test", Set.empty),
-      "tags" → rm.arrayNode(Vector(rm.scalarNode("culture", "Test", Set.empty), rm.scalarNode("nature", "Test", Set.empty))),
-      "comments" → rm.arrayNode(Vector(
+      "title" -> rm.scalarNode("Foo", "Test", Set.empty),
+      "text" -> rm.scalarNode("foo bar and baz", "Test", Set.empty),
+      "tags" -> rm.arrayNode(Vector(rm.scalarNode("culture", "Test", Set.empty), rm.scalarNode("nature", "Test", Set.empty))),
+      "comments" -> rm.arrayNode(Vector(
         rm.mapNode(List(
-          "author" → rm.scalarNode("bob", "Test", Set.empty),
-          "text" → rm.scalarNode("first!", "Test", Set.empty)))
+          "author" -> rm.scalarNode("bob", "Test", Set.empty),
+          "text" -> rm.scalarNode("first!", "Test", Set.empty)))
       ))
     ))
 
@@ -192,7 +192,7 @@ trait InputHandlingBehaviour {
     iu.getMapValue(res, "text") should be (Some(m.scalarNode("foo bar and baz", "Test", Set.empty)))
     iu.getMapValue(res, "tags") should be (Some(m.arrayNode(Vector(m.scalarNode("culture", "Test", Set.empty), m.scalarNode("nature", "Test", Set.empty)))))
     iu.getMapValue(res, "comments") should be (Some(m.arrayNode(Vector(
-      m.mapNode(Vector("author" → m.scalarNode("bob", "Test", Set.empty), "text" → m.scalarNode("first!", "Test", Set.empty)))
+      m.mapNode(Vector("author" -> m.scalarNode("bob", "Test", Set.empty), "text" -> m.scalarNode("first!", "Test", Set.empty)))
     ))))
   }
 }
