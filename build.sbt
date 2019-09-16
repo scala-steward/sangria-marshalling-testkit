@@ -1,6 +1,6 @@
 name := "sangria-marshalling-testkit"
 organization := "org.sangria-graphql"
-version := "1.0.3-SNAPSHOT"
+version := "1.0.2-SNAPSHOT"
 mimaPreviousArtifacts := Set("org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.1")
 
 description := "Sangria Marshalling API TestKit"
