@@ -1,12 +1,13 @@
 package sangria.marshalling.testkit
 
-import org.scalatest.{Matchers, WordSpec}
 import sangria.marshalling.{InputParser, InputUnmarshaller}
 
 import scala.util.Success
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 trait ParsingBehaviour {
-  this: WordSpec with Matchers =>
+  this: AnyWordSpec with Matchers =>
 
   def `input parser`[T : InputUnmarshaller : InputParser](testSubjects: ParseTestSubjects): Unit = {
     val iu = implicitly[InputUnmarshaller[T]]
