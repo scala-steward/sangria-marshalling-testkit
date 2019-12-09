@@ -1,10 +1,11 @@
 package sangria.marshalling.testkit
 
-import org.scalatest.{WordSpec, Matchers}
 import sangria.marshalling._
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 trait InputHandlingBehaviour {
-  this: WordSpec with Matchers =>
+  this: AnyWordSpec with Matchers =>
 
   def `AST-based input marshaller`[Raw](rm: ResultMarshaller)(implicit ti: ToInput[rm.Node, Raw]): Unit = {
     "handle undefined values (ast-based marshalling)" in {

@@ -1,13 +1,14 @@
 package sangria.marshalling.testkit
 
-import org.scalatest.{WordSpec, Matchers}
 import sangria.marshalling.{ScalaInput, InputUnmarshaller, ResultMarshaller}
 
 import sangria.marshalling.MarshallingUtil._
 import sangria.util.tag._
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 trait MarshallingBehaviour {
-  this: WordSpec with Matchers =>
+  this: AnyWordSpec with Matchers =>
 
   def `value (un)marshaller`[T](rm: ResultMarshaller)(implicit iu: InputUnmarshaller[rm.Node]): Unit = {
     "(un)marshal boolean scalar values" in {
