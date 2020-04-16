@@ -1,3 +1,5 @@
+See [releases](https://github.com/sangria-graphql-org/sangria-marshalling-testkit/releases)
+
 ## v1.0.1 (2017-10-04)
 
 * Add testcase »(un)marshal long scalar values« (#1). Thanks to @agebhar1 for this contribution!
