@@ -20,7 +20,7 @@ scalacOptions ++= {
 
 libraryDependencies ++= Seq(
   "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.4",
-  "org.scalatest" %% "scalatest" % "3.1.1"
+  "org.scalatest" %% "scalatest" % "3.1.4"
 )
 
 git.remoteRepo := "git@github.com:sangria-graphql/sangria-marshalling-testkit.git"
@@ -49,6 +49,6 @@ startYear := Some(2016)
 organizationHomepage := Some(url("https://github.com/sangria-graphql"))
 developers := Developer("OlegIlyenko", "Oleg Ilyenko", "", url("https://github.com/OlegIlyenko")) :: Nil
 scmInfo := Some(ScmInfo(
-  browseUrl = url("https://github.com/sangria-graphql-org/sangria-marshalling-testkit.git"),
-  connection = "scm:git:git@github.com:sangria-graphql-org/sangria-marshalling-testkit.git"
+  browseUrl = url("https://github.com/sangria-graphql/sangria-marshalling-testkit.git"),
+  connection = "scm:git:git@github.com:sangria-graphql/sangria-marshalling-testkit.git"
 ))
