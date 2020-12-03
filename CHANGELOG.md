@@ -1,4 +1,4 @@
-See [releases](https://github.com/sangria-graphql-org/sangria-marshalling-testkit/releases)
+See [releases](https://github.com/sangria-graphql/sangria-marshalling-testkit/releases)
 
 ## v1.0.1 (2017-10-04)
 
