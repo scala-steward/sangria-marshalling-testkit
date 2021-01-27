@@ -6,8 +6,8 @@ description := "Sangria Marshalling API TestKit"
 homepage := Some(url("http://sangria-graphql.org"))
 licenses := Seq("Apache License, ASL Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
 
-scalaVersion := "2.13.1"
-crossScalaVersions := Seq("2.11.12", "2.12.11", scalaVersion.value)
+scalaVersion := "2.13.4"
+crossScalaVersions := Seq("2.11.12", "2.12.13", scalaVersion.value)
 
 scalacOptions ++= Seq("-deprecation", "-feature")
 
