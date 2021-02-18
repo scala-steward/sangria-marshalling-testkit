@@ -20,7 +20,7 @@ javacOptions ++= Seq("-source", "8", "-target", "8")
 
 libraryDependencies ++= Seq(
   "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.5",
-  "org.scalatest" %% "scalatest" % "3.2.3"
+  "org.scalatest" %% "scalatest" % "3.2.4"
 )
 
 git.remoteRepo := "git@github.com:sangria-graphql/sangria-marshalling-testkit.git"
