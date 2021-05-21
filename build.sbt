@@ -3,8 +3,8 @@ organization := "org.sangria-graphql"
 mimaPreviousArtifacts := Set("org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.3")
 
 description := "Sangria Marshalling API TestKit"
-homepage := Some(url("http://sangria-graphql.org"))
-licenses := Seq("Apache License, ASL Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
+homepage := Some(url("https://sangria-graphql.github.io/"))
+licenses := Seq("Apache License, ASL Version 2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0"))
 
 ThisBuild / crossScalaVersions := Seq("2.12.13", "2.13.6")
 ThisBuild / scalaVersion := crossScalaVersions.value.last
@@ -43,13 +43,11 @@ ThisBuild / githubWorkflowPublishTargetBranches :=
 )
 
 // nice *magenta* prompt!
-
-shellPrompt in ThisBuild := { state =>
+ThisBuild / shellPrompt := { state =>
   scala.Console.MAGENTA + Project.extract(state).currentRef.project + "> " + scala.Console.RESET
 }
 
 // Additional meta-info
-
 startYear := Some(2016)
 organizationHomepage := Some(url("https://github.com/sangria-graphql"))
 developers := Developer("OlegIlyenko", "Oleg Ilyenko", "", url("https://github.com/OlegIlyenko")) :: Nil
