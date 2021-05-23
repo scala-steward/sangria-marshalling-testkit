@@ -23,8 +23,6 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.9"
 )
 
-git.remoteRepo := "git@github.com:sangria-graphql/sangria-marshalling-testkit.git"
-
 // Publishing
 // Release
 ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
