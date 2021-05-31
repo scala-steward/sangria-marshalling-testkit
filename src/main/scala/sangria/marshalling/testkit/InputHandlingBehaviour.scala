@@ -142,7 +142,7 @@ trait InputHandlingBehaviour {
     assertPossibleNullNodes(commentSeq(0), m, "text" :: Nil)
   }
 
-  def assertPossibleNullNodes[T](res: T, m: ResultMarshaller, names: Seq[String])(implicit iu: InputUnmarshaller[T]) =
+  def assertPossibleNullNodes[T](res: T, m: ResultMarshaller, names: Seq[String])(implicit iu: InputUnmarshaller[T]): Unit =
     names.foreach { name =>
       if (iu.getMapKeys(res).exists(_ == name))
         iu.getMapValue(res, name) should be (Some(m.nullNode))
