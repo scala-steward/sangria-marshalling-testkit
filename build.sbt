@@ -1,12 +1,21 @@
+val isScala3 = Def.setting(
+  CrossVersion.partialVersion(scalaVersion.value).exists(_._1 == 3)
+)
+
 name := "sangria-marshalling-testkit"
 organization := "org.sangria-graphql"
-mimaPreviousArtifacts := Set("org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.3")
+mimaPreviousArtifacts := {
+  if (isScala3.value)
+    Set.empty
+  else
+    Set("org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.3")
+}
 
 description := "Sangria Marshalling API TestKit"
 homepage := Some(url("https://sangria-graphql.github.io/"))
 licenses := Seq("Apache License, ASL Version 2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0"))
 
-ThisBuild / crossScalaVersions := Seq("2.12.14", "2.13.6")
+ThisBuild / crossScalaVersions := Seq("2.12.14", "2.13.6", "3.0.0")
 ThisBuild / scalaVersion := crossScalaVersions.value.last
 ThisBuild / githubWorkflowPublishTargetBranches := List()
 ThisBuild / githubWorkflowBuildPreamble ++= List(
@@ -14,12 +23,16 @@ ThisBuild / githubWorkflowBuildPreamble ++= List(
 )
 
 scalacOptions ++= Seq("-deprecation", "-feature")
-
-scalacOptions += "-target:jvm-1.8"
+scalacOptions ++= {
+  if (isScala3.value)
+    Seq("-Xtarget:8")
+  else
+    Seq("-target:jvm-1.8")
+}
 javacOptions ++= Seq("-source", "8", "-target", "8")
 
 libraryDependencies ++= Seq(
-  "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.5",
+  "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.6",
   "org.scalatest" %% "scalatest" % "3.2.9"
 )
 
@@ -28,7 +41,7 @@ libraryDependencies ++= Seq(
 ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
 ThisBuild / githubWorkflowPublishTargetBranches :=
   Seq(RefPredicate.StartsWith(Ref.Tag("v")))
-  ThisBuild / githubWorkflowPublish := Seq(
+ThisBuild / githubWorkflowPublish := Seq(
   WorkflowStep.Sbt(
     List("ci-release"),
     env = Map(
