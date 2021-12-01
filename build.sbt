@@ -13,7 +13,8 @@ mimaPreviousArtifacts := {
 
 description := "Sangria Marshalling API TestKit"
 homepage := Some(url("https://sangria-graphql.github.io/"))
-licenses := Seq("Apache License, ASL Version 2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0"))
+licenses := Seq(
+  "Apache License, ASL Version 2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0"))
 
 ThisBuild / crossScalaVersions := Seq("2.12.15", "2.13.7", "3.1.0")
 ThisBuild / scalaVersion := crossScalaVersions.value.last
@@ -61,8 +62,13 @@ ThisBuild / shellPrompt := { state =>
 // Additional meta-info
 startYear := Some(2016)
 organizationHomepage := Some(url("https://github.com/sangria-graphql"))
-developers := Developer("OlegIlyenko", "Oleg Ilyenko", "", url("https://github.com/OlegIlyenko")) :: Nil
-scmInfo := Some(ScmInfo(
-  browseUrl = url("https://github.com/sangria-graphql/sangria-marshalling-testkit"),
-  connection = "scm:git:git@github.com:sangria-graphql/sangria-marshalling-testkit.git"
-))
+developers := Developer(
+  "OlegIlyenko",
+  "Oleg Ilyenko",
+  "",
+  url("https://github.com/OlegIlyenko")) :: Nil
+scmInfo := Some(
+  ScmInfo(
+    browseUrl = url("https://github.com/sangria-graphql/sangria-marshalling-testkit"),
+    connection = "scm:git:git@github.com:sangria-graphql/sangria-marshalling-testkit.git"
+  ))
