@@ -257,7 +257,7 @@ trait MarshallingBehaviour {
         iu.isMapNode(marshaled) should be(true)
         iu.isDefined(marshaled) should be(true)
 
-        iu.getMapKeys(marshaled) should (have(size(2)).and(contain("first")).and(contain("second")))
+        iu.getMapKeys(marshaled) should have(size(2)).and(contain("first")).and(contain("second"))
         iu.getMapValue(marshaled, "first") should be(Some(seq))
         iu.getMapValue(marshaled, "second") should be(Some(rm.nullNode))
         iu.getMapValue(marshaled, "non-existing") should be(None)

@@ -121,7 +121,7 @@ trait InputHandlingBehaviour {
       iu: InputUnmarshaller[T]): Unit = {
     iu.isMapNode(res) should be(true)
 
-    iu.getMapKeys(res) should (contain("title").and(contain("comments")))
+    iu.getMapKeys(res) should contain("title").and(contain("comments"))
     iu.getMapValue(res, "title") should be(Some(m.scalarNode("Foo", "Test", Set.empty)))
     iu.getMapValue(res, "comments") should be(Some(m.arrayNode(Vector.empty)))
 
@@ -132,7 +132,7 @@ trait InputHandlingBehaviour {
       iu: InputUnmarshaller[T]): Unit = {
     iu.isMapNode(res) should be(true)
 
-    iu.getMapKeys(res) should (contain("title").and(contain("comments")))
+    iu.getMapKeys(res) should contain("title").and(contain("comments"))
     iu.getMapValue(res, "title") should be(Some(m.scalarNode("Foo", "Test", Set.empty)))
 
     assertPossibleNullNodes(res, m, "text" :: "tags" :: Nil)
