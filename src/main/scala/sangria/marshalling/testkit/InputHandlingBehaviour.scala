@@ -57,8 +57,8 @@ trait InputHandlingBehaviour {
     }
   }
 
-  def `AST-based input unmarshaller`[T](fi: FromInput[T])(implicit
-      iu: InputUnmarshaller[T]): Unit = {
+  def `AST-based input unmarshaller`[T](
+      fi: FromInput[T])(implicit iu: InputUnmarshaller[T]): Unit = {
     "handle undefined values (ast-based unmarshalling)" in {
       val m = fi.marshaller
       val res = fi.fromResult(marshalUndefined(fi.marshaller))
@@ -170,8 +170,9 @@ trait InputHandlingBehaviour {
         ))
       ))
 
-  private def verifyNull[T](res: T, m: ResultMarshaller)(implicit
-      iu: InputUnmarshaller[T]): Unit = {
+  private def verifyNull[T](
+      res: T,
+      m: ResultMarshaller)(implicit iu: InputUnmarshaller[T]): Unit = {
     iu.isMapNode(res) should be(true)
 
     iu.getMapValue(res, "title") should be(Some(m.scalarNode("Foo", "Test", Set.empty)))
