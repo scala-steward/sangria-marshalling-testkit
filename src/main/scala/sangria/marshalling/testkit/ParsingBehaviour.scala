@@ -100,13 +100,12 @@ trait ParsingBehaviour {
       iu.isDefined(d) should be(false)
     }
 
-    "result in failure in case of syntax errors" in {
+    "result in failure in case of syntax errors" in
       testSubjects.syntaxError.foreach { broken =>
         val result = parser.parse(broken)
 
         result.isFailure should be(true)
       }
-    }
   }
 
   case class ParseTestSubjects(
